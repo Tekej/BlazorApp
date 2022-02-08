@@ -1,0 +1,150 @@
+﻿@page "/studentsdata"
+@using WebApplication1.Data
+@using WebApplication1.Models
+@using System.IO
+@inject Students Students
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS;
+
+
+<h1>Students list</h1>
+
+<p></p>
+
+@if (_students == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="unselectable">Avatars</th>
+            <th class="unselectable" @onclick="@SortByName">FirstName</th>
+            <th class="unselectable" @onclick="@SortByLastName">LastName</th>
+            <th class="unselectable" @onclick="@SortByStudies">Studies</th>
+            <th class="unselectable" @onclick="@SortByBirthDate">BirthDate </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var student in _students)
+        {
+            <tr>
+                <td>
+                    <img src="@student.Avatars" @onclick="() => OneStudent(student.Index)" alt="">
+                </td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+                <td>@student.Studies</td>
+                <td>@student.Birthdate.ToShortDateString()</td>
+                <td>
+                    <img src="https://findicons.com/files/icons/2015/24x24_free_application/24/delete.png" @onclick="() => StudentDelete(student.Index)">
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@functions{
+
+    private async Task StudentDelete(string index)
+    {
+        var fas = await JS.InvokeAsync<bool>("confirm", "Do you really want to delete this student?");
+        if (fas)
+        {
+            var b = _students;
+            _students = _students.Where(x => x.Index != index).ToArray();
+            var file = new StreamWriter(@".\Data\Dane\dane.txt");
+            foreach (var elem in _students) file.Write(elem);
+            await file.DisposeAsync();
+            StateHasChanged();
+            await JS.InvokeVoidAsync("alert", "Student is deleted");
+        }
+        else
+        {
+            await JS.InvokeVoidAsync("alert", "Student is not deleted");
+        }
+    }
+
+    void OneStudent(string student)
+    {
+        NavigationManager.NavigateTo("studentdata/" + student);
+    }
+
+    int countName;
+    int countLastName = 0;
+    int countStudies = 0;
+    int countDate = 0;
+
+    void SortByName()
+    {
+        countName++;
+        if (countName % 2 == 0)
+        {
+            _students = _students.OrderByDescending(x => x.FirstName).ToArray();
+        }
+        else
+        {
+            _students = _students.OrderBy(x => x.FirstName).ToArray();
+        }
+        StateHasChanged();
+    }
+
+    void SortByLastName()
+    {
+        countLastName++;
+        if (countLastName % 2 == 0)
+        {
+            _students = _students.OrderByDescending(x => x.LastName).ToArray();
+        }
+        else
+        {
+            _students = _students.OrderBy(x => x.LastName).ToArray();
+        }
+        StateHasChanged();
+    }
+
+    void SortByStudies()
+    {
+        countStudies++;
+        if (countStudies % 2 == 0)
+        {
+            _students = _students.OrderByDescending(x => x.Studies).ToArray();
+        }
+        else
+        {
+            _students = _students.OrderBy(x => x.Studies).ToArray();
+        }
+        StateHasChanged();
+    }
+
+    void SortByBirthDate()
+    {
+        countDate++;
+        if (countDate % 2 == 0)
+        {
+            _students = _students.OrderByDescending(x => x.Birthdate).ToArray();
+        }
+        else
+        {
+            _students = _students.OrderBy(x => x.Birthdate).ToArray();
+        }
+        StateHasChanged();
+    }
+
+}
+
+@code {
+    private Student[] _students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _students = await Students.GetStudentsAsync(DateTime.Now);
+    }
+
+}

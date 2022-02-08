@@ -1,0 +1,59 @@
+@page "/studentdata/{Myvalue}"
+
+@using WebApplication1.Data
+@using WebApplication1.Models
+@inject Students Students
+@inject NavigationManager NavigationManager
+ 
+
+<h1>Student's details</h1>
+
+
+<p></p>
+
+@if (_students == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+  
+    
+    
+    <body>
+    <form>
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname" value=@_student.FirstName><br>
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname" value=@_student.LastName><br>
+        <label for="fname">Birthdate:</label>
+        <input type="text" id="fname" name="fname" value=@_student.Birthdate><br>
+        <label for="lname">Studies:</label>
+        <input type="text" id="lname" name="lname" value=@_student.Studies><br>
+        <label for="lname">Avatar:</label>
+        <input type="text" id="lname" name="lname" value=@_student.Avatars><br>
+        <img src=@_student.Avatars alt="Avatar"><br>
+        <form action="studentsdata" target="_blank">
+            <button>Return</button>
+        </form>
+
+
+    </form>
+    </body>
+    
+}
+
+@code {
+    [Parameter]
+    public string Myvalue{ get; set; }
+    
+    private Student[] _students;
+    private Student _student;
+    protected override async Task OnInitializedAsync()
+    {
+        _students = await Students.GetStudentsAsync(DateTime.Now);
+        _student = _students.First(x => x.Index == Myvalue);
+    }
+
+    
+}

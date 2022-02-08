@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AjaxMin" Version="5.14.5506.26202" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\scripts\Buttonscript.js" />
+  </ItemGroup>
+
+</Project>

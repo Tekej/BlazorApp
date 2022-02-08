@@ -1,0 +1,7 @@
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,Kaja,Jankowski,Informatyka,12.02.2000 0:00:00,2
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,Justyna,Kowalski,Sztuka,12.02.2000 0:00:00,3
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,Kamil,Brzanek,Informatyka,12.02.2000 0:00:00,5
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,Marta,Maciejewski,Sztuka,12.02.2000 0:00:00,6
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,szymon,Jankowski,Informatyka,12.02.2000 0:00:00,7
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,Joanna,Brzanek,Sztuka,12.02.2000 0:00:00,8
+https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10613,Irena,Maciejewski,Informatyka,12.02.2000 0:00:00,9
